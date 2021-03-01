@@ -969,7 +969,6 @@ nil
 (c (d e))
 ```
 
-!!
 Logically, any value except `nil` counts as truth, so why not return
 the most informative result you can?
 
