@@ -26,6 +26,8 @@ readme_stuff.each do |thing|
 end
 chunk_lines << [readme.length - 1, source.length - 1]
 
+# TODO: throw
+
 chunks = chunk_lines.each_cons(2).to_a.map do |pair|
 	[
 		readme_filtered.slice(pair[0][0]...pair[1][0]).join("\n"),
