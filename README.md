@@ -911,6 +911,7 @@ list:
 (a b c d e f)
 ```
 
+!!no
 Now let's look at the source. The first expression defines a function
 no that takes one argument, `x`, and returns the result of using id to
 compare it to nil. So `no` returns `t` if its argument is nil, and nil
@@ -926,6 +927,7 @@ nil
 Since `nil` represents both falsity and the empty list, no is both
 logical negation and the test for the empty list.
 
+!!atom
 The second function, `atom`, returns true iff its argument is not a
 pair.
 
@@ -940,6 +942,7 @@ t
 nil
 ```
 
+!!all
 Next come a pair of similar functions, `all` and `some`. The former
 returns `t` iff its first argument returns true of all the elements of
 its second,
@@ -953,6 +956,7 @@ t
 nil
 ```
 
+!!some
 and the latter returns true iff its first argument returns true of
 any element of its second. However, when `some` returns true, it
 doesn't simply return `t`. It returns the remainder of the list
@@ -965,6 +969,7 @@ nil
 (c (d e))
 ```
 
+!!
 Logically, any value except `nil` counts as truth, so why not return
 the most informative result you can?
 
@@ -1016,6 +1021,7 @@ already exist in Bel you could define it as simply
 But since we haven't defined functional composition yet, I didn't use
 it.
 
+!!reduce
 The next function, `reduce`, is for combining the elements of its
 second argument using nested calls to its first. For example
 
@@ -1078,6 +1084,7 @@ or if an `if` is long,
      else)
 ```
 
+!!cons
 The next function, `cons`, has the name that `join` had in McCarthy's
 Lisp. It's the function you use to put things on the front of a list.
 
@@ -1180,6 +1187,7 @@ called
 
 you'll get an error because there is no parameter for `c`.
 
+!!append
 The next function, `append`, joins lists together:
 
 ```
@@ -1268,6 +1276,7 @@ first argument and the remaining arguments. Unlike `append2`, `append`
 has to make this call using `apply`, because it has a varying number of
 arguments in a list, instead of exactly two.
 
+!!snoc
 Once we have `append` it's easy to define `snoc`, which as its name
 suggests is like a reverse `cons`,
 
@@ -1276,6 +1285,7 @@ suggests is like a reverse `cons`,
 (a b c d e)
 ```
 
+!!list
 and `list`, which returns a list of its arguments.
 
 ```
@@ -1309,6 +1319,7 @@ merely a list with the same elements, but the same pair — meaning if
 we modified the value we got from `list`, we'd also be modifying the
 object up in the calling code.
 
+!!map
 After `list` we see map, which in the simplest case returns a list of
 calling its first argument on each element of its second.
 
@@ -1379,6 +1390,7 @@ line. But in the preceding line we also use `(map car ls)` to collect
 the arguments for `f`. And that's why we need the single-list base
 case. Without it, we'd get an infinite recursion.
 
+!!fn
 Next comes our first macro, fn. There are two concepts to explain
 first, though: macros and scope.
 
@@ -1606,18 +1618,21 @@ Then the expansion wraps a `do` around the expressions.
 We haven't seen `do` yet, but it's coming soon. It makes multiple
 expressions into a block of code.
 
+!!vmark
 Next comes something unusual: vmark is set to a newly created pair
 made by join. Missing arguments to primitives default to `nil`, so
 `(join)` is equivalent to `(join nil nil)`, and when you see a call like
 this, it's usually for the purpose of creating a fresh pair to mark
 the identity of something.
 
+!!uvar
 Any pair with `vmark` in its `car` is treated by Bel as a variable. The
 next function, `uvar`, thus returns a new, unique variable each time
 it's called. The reason we need such a thing is so that when we're
 manipulating user code, we can add variables without worrying they'll
 accidentally share the names of variables created by users.
 
+!!do
 Now we see the definition of `do`, which we used in the expansion of
 `fn`. The `do` macro uses nested function calls to represent blocks of
 code.
@@ -1681,6 +1696,7 @@ in case it occurs in one of the expressions in the do. Since we're
 never going to look at the values passed in these function calls, we
 don't care what parameter we use, so long as it's unique.
 
+!!let
 If you want to establish a lexical binding for some variable, you do
 it with `let`, which is a very simple macro upon `fn`.
 
@@ -1699,6 +1715,7 @@ lists in the first argument.
 (a (b c))
 ```
 
+!!macro
 The `macro` macro is analogous to the `fn` macro in that it returns a
 literal macro. You'll rarely use these directly, but you could if you
 wanted to.
@@ -1710,6 +1727,7 @@ a
 a
 ```
 
+!!def
 Next we see the definition of `def` itself, which does nothing more
 than set its first argument to a `fn` made using the rest of the
 arguments, and also of `mac`, which does the same with macro.
@@ -1725,6 +1743,7 @@ avoid an infinite recursion we either have to define `reduce` as a
 literal function, or make either `fn` or `do` consider the single
 expression case, and making `fn` do it was the least ugly.
 
+!!or
 Now that we have `let`, we can define `or`, which returns the first
 non-nil value returned by one of its arguments. Like most ors in
 programming languages, it only evaluates as many arguments as it
@@ -1789,6 +1808,7 @@ nil
 a
 ```
 
+!!and
 The `and` macro is similar in spirit to `or`, but different in its
 implementation. Whereas or uses recursion to generate its expansion,
 and uses reduce. Since
