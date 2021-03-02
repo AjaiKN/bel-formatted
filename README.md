@@ -2431,6 +2431,13 @@ t
 ```
 
 !!bel
+
+### The Bel Interpreter
+
+> **Note**: Since this section jumps around a lot, talking about different
+> sections of the code, the remaining code is available on the right
+> and can be scrolled independently of the text.
+
 The operators we've defined so far, together with the axioms, will
 now enable us to define a function that acts as a Bel interpreter: a
 function that will take any Bel expression as an argument and
@@ -2528,7 +2535,6 @@ happening in the code that runs when `e` is a literal:
 
 That is what returning a value looks like.
 
-!!mev
 The function `mev` (`m` = multi-threaded) is what the interpreter calls
 to continue evaluation after doing something. Its purpose is to check
 whether interpretation should terminate, and if not, to allow another
@@ -2553,7 +2559,6 @@ the current thread on the front of the list of threads, and if not we
 put it on the end. Since `sched` always runs the first thread on the
 list, if we keep the current thread on the front, it keeps running.
 
-!!ev
 Now that we've seen how `mev` and `sched` work, let's return to `ev`. If `e`
 is a variable, we call `vref` to evaluate it. And what `vref` ordinarily
 does is this:
@@ -2579,7 +2584,6 @@ situation because data is going from one layer of Bel to another:
 from the interpreter running in Bel to the Bel program it's
 evaluating.
 
-!!smark
 We use binding to check whether a variable has a dynamic binding. It
 checks by searching the expression stack looking for an entry binding
 that variable. As we'll see when we get to its definition, `dyn` works

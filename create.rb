@@ -60,11 +60,14 @@ html = <<-HTML
 		width: 50%;
 		padding: 0 1rem;
 	}
-	.container:not(:last-child) .source {
+	.container .source {
 		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
 		align-self: flex-start;
+	}
+	.container .source pre {
+		max-height: 95vh;
 	}
 
 	.container:first-child {
