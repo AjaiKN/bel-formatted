@@ -1851,6 +1851,7 @@ pair. Numbers and strings are pairs, for example. So you'd never
 want to use id for comparison unless you were specifically looking
 for identical list structure.
 
+!!=
 In the definition of `=` we see the first instance of square bracket
 notation.
 
@@ -1878,11 +1879,13 @@ been simply
 (apply id args)
 ```
 
+!!def symbol
 The next four functions are predicates for the four types. All use `=`
 for this test even though all could use `id`. My rule is to use `=`
 unless I specifically need `id`. That way the appearance of `id` is a
 signal that code is looking for identical structure.
 
+!!proper
 Then we see `proper`, which tells us whether something is a proper
 list. Informally, a proper list is one that we don't need a dot to
 display.
@@ -1900,6 +1903,7 @@ Formally, something is a proper list if it's either `nil` or a pair
 whose `cdr` is a proper list, which is exactly what the definition
 says.
 
+!!def string
 In Bel, a proper list of characters is called a string, and has a
 special notation: zero or more characters within double quotes.
 
@@ -1908,6 +1912,7 @@ special notation: zero or more characters within double quotes.
 t
 ```
 
+!!mem
 The next function, mem, tests for list membership.
 
 ```
@@ -1956,14 +1961,17 @@ behaviors out of `mem`.
 (4 6 8)
 ```
 
+!!in
 The next function, `in`, is effectively a generalization of `=`. It
 returns true iff its first argument is `=` to any of the rest.
 
+!!cadr
 Then come three common combinations of `car` and `cdr`: `cadr`, which gets
 the second element of a list, `cddr`, which takes two elements off the
 front, and `caddr`, which gets the third element. We'll have other ways
 to do these things once we've defined numbers.
 
+!!case
 The `case` macro takes an initial expression `e`, followed by
 alternating keys (which are implicitly quoted) and expressions, and
 returns the result of evaluating the expression following the key
@@ -1989,6 +1997,7 @@ returns the name of a sign represented by a symbol:
 plus
 ```
 
+!!iflet
 The `iflet` macro lets you use the result of a test in an `if`. It works
 like an ordinary `if`, except that it takes an initial variable, which
 in any then expression will be lexically bound to the value returned
@@ -2005,6 +2014,7 @@ Notice how similar the definitions of `case` and `iflet` are, despite
 their different purposes. They're both recursive macros, like `or`,
 and both work through their arguments two at a time.
 
+!!aif
 We use `iflet` to define `aif`, which implicitly binds the variable `it`
 to the value of the preceding test expression.
 
@@ -2018,6 +2028,7 @@ to the value of the preceding test expression.
 The function given to `map` here tests whether x has a non-nil cdr,
 and if so returns the car of `it`.
 
+!!find
 With `aif` and `some`, it's trivial to define `find`, which returns the
 first element of a list that matches some test.
 
@@ -2027,6 +2038,7 @@ first element of a list that matches some test.
 "apple"
 ```
 
+!!begins
 The `begins` function returns true iff its first argument is a list
 that begins with its second argument:
 
@@ -2038,6 +2050,7 @@ t
 Like `mem`, it takes an optional comparison function that defaults
 to `=`.
 
+!!caris
 It's used in `caris`, which returns true iff its first argument is a
 pair whose car is its second.
 
@@ -2050,6 +2063,7 @@ This is one of those functions you end up using surprisingly often,
 because it's so common for the car of a list to have some special
 significance.
 
+!!hug
 Our next function, `hug`, applies a function to pairs of elements of a
 list. Since the default function is list, by default it simply
 returns pairs of elements.
@@ -2061,6 +2075,7 @@ returns pairs of elements.
 (3 7 5)
 ```
 
+!!with
 This too is something you need surprisingly often, especially when
 operating on expressions, where it's common to have subexpressions
 that form implicit pairs. We've seen this already in `if`, `case`, and
@@ -2086,6 +2101,7 @@ values of later ones.
 a
 ```
 
+!!keep
 The next function, `keep`, returns all the elements of a list that pass
 some test
 
@@ -2094,6 +2110,7 @@ some test
 (1 3 5)
 ```
 
+!!rem
 and `rem` removes its first argument from a list
 
 ```
@@ -2110,6 +2127,7 @@ argument.
 (3 1 2)
 ```
 
+!!get
 The next two functions, `get` and `put`, are for operating on key-value
 stores represented as lists of pairs like this one:
 
@@ -2143,6 +2161,7 @@ value is so that we can distinguish between a key having a value of
 Notice that `put` doesn't change the value of `x`, just as `cons`ing
 something onto `x` wouldn't change the value of it.
 
+!!rev
 The function `rev` reverses a list,
 
 ```
@@ -2150,6 +2169,7 @@ The function `rev` reverses a list,
 "elba"
 ```
 
+!!snap
 and `snap` breaks off a piece of its second argument that's as long as
 its first, returning both parts:
 
@@ -2158,6 +2178,7 @@ its first, returning both parts:
 ((1 2) (3 4 5))
 ```
 
+!!udrop
 It's used in `udrop` (for "unary drop"), which returns just the
 remaining part:
 
@@ -2166,6 +2187,7 @@ remaining part:
 (3 4 5)
 ```
 
+!!idfn
 Then we get the identity function, `idfn`:
 
 ```
@@ -2176,6 +2198,7 @@ Then we get the identity function, `idfn`:
 You wouldn't call this directly (why bother?) but you often end up
 using it as a default or when operating on functions.
 
+!!is
 The function `is` is a little unusual in that it returns a function for
 comparing its argument to something.
 
@@ -2188,6 +2211,7 @@ An `is` is a partially applied `=`, so in principle we won't need it
 after we define partial application later on. But this case is so
 common that it's convenient to have a separate operator for it.
 
+!!eif
 Now come several macros for dealing with errors. The first, `eif`,
 introduces several new concepts, so I'll explain them first, then `eif`
 itself.
@@ -2359,6 +2383,7 @@ with. So to decide which of the two succeeding expressions to
 evaluate, we just check whether the `car` of `w` is `v`. (And of course we
 check using `id`, not `=`.)
 
+!!onerr
 The `eif` macro is the most general error-catching macro, but there
 are two more, `onerr` and `safe`, that are more commonly used. The
 `onerr` macro takes two expressions and returns the value of the first
@@ -2377,6 +2402,7 @@ a
 nil
 ```
 
+!!literal
 The next function, `literal`, returns true iff its argument evaluates
 to itself,
 
@@ -2385,6 +2411,7 @@ to itself,
 (t t t)
 ```
 
+!!variable
 while `variable` returns true iff its argument is a variable, meaning
 an ordinary symbol or a `uvar`:
 
@@ -2393,6 +2420,7 @@ an ordinary symbol or a `uvar`:
 (t t nil)
 ```
 
+!!isa
 And `isa` is for checking whether something is a particular kind of
 `lit`. Like `is`, `isa` doesn't do the check, but returns a function that
 does
@@ -2402,6 +2430,7 @@ does
 t
 ```
 
+!!bel
 The operators we've defined so far, together with the axioms, will
 now enable us to define a function that acts as a Bel interpreter: a
 function that will take any Bel expression as an argument and
@@ -2499,6 +2528,7 @@ happening in the code that runs when `e` is a literal:
 
 That is what returning a value looks like.
 
+!!mev
 The function `mev` (`m` = multi-threaded) is what the interpreter calls
 to continue evaluation after doing something. Its purpose is to check
 whether interpretation should terminate, and if not, to allow another
@@ -2523,6 +2553,7 @@ the current thread on the front of the list of threads, and if not we
 put it on the end. Since `sched` always runs the first thread on the
 list, if we keep the current thread on the front, it keeps running.
 
+!!ev
 Now that we've seen how `mev` and `sched` work, let's return to `ev`. If `e`
 is a variable, we call `vref` to evaluate it. And what `vref` ordinarily
 does is this:
@@ -2548,6 +2579,7 @@ situation because data is going from one layer of Bel to another:
 from the interpreter running in Bel to the Bel program it's
 evaluating.
 
+!!smark
 We use binding to check whether a variable has a dynamic binding. It
 checks by searching the expression stack looking for an entry binding
 that variable. As we'll see when we get to its definition, `dyn` works

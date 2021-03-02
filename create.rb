@@ -12,8 +12,9 @@ end
 
 source_stuff = {}
 source.each.with_index do |line, i|
-	if /^\(\S+ (\S+)/.match(line)
+	if /^\((\S+ (\S+))/.match(line)
 		source_stuff[$1] = i
+		source_stuff[$2] = i
 	end
 end
 
@@ -28,7 +29,7 @@ chunk_lines << [readme.length - 1, source.length - 1]
 
 chunks = chunk_lines.each_cons(2).to_a.map do |pair|
 	if pair[1][0] < pair[0][0] || pair[1][1] < pair[0][1]
-		raise "not in order"
+		raise "not in order: #{pair[0][1]}, #{pair[1][1]}"
 	end
 	[
 		readme_filtered.slice(pair[0][0]...pair[1][0]).join("\n"),
