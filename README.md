@@ -1,4 +1,4 @@
-## The Bel Language guide
+# The Bel Language guide
 
 _By Paul Graham, 12 Oct 2019_
 
