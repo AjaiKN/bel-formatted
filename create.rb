@@ -26,32 +26,14 @@ readme_stuff.each do |thing|
 end
 chunk_lines << [readme.length - 1, source.length - 1]
 
-# TODO: throw
-
 chunks = chunk_lines.each_cons(2).to_a.map do |pair|
+	if pair[1][0] < pair[0][0] || pair[1][1] < pair[0][1]
+		raise "not in order"
+	end
 	[
 		readme_filtered.slice(pair[0][0]...pair[1][0]).join("\n"),
 		         source.slice(pair[0][1]...pair[1][1]).join("\n")
 	]
 end
-
-# readme_stuff.each do |thing|
-# 	readme_line_num, id = thing
-# 	source_line_num = id == "" ? current_source_line : source_stuff[id]
-# 	if (readme_line_num < current_readme_line) || (source_line_num < current_source_line)
-# 		p [readme_line_num, current_readme_line, source_line_num, current_source_line]
-# 		raise "not in order: " + id
-# 	end
-# 	chunks << [
-# 		readme_filtered.slice(current_readme_line...readme_line_num).join("\n"),
-# 		source.slice(current_source_line...source_line_num).join("\n")
-# 	]
-# 	current_readme_line = readme_line_num
-# 	current_source_line = source_line_num
-# end
-# chunks << [
-# 	readme_filtered.slice(current_readme_line..(-1)).join("\n"),
-# 	source.slice(current_source_line..(-1)).join("\n")
-# ]
 
 p chunks
