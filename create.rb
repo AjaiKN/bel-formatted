@@ -60,6 +60,12 @@ html = <<-HTML
 		width: 50%;
 		padding: 0 1rem;
 	}
+	.container:not(:last-child) .source {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0;
+		align-self: flex-start;
+	}
 
 	.container:first-child {
 		justify-content: center;
