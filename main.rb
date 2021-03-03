@@ -45,6 +45,7 @@ html = <<-HTML
 <!DOCTYPE html>
 <html lang="en">
 <title>Bel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 	html, body {
 		margin: 0%;
@@ -77,8 +78,12 @@ html = <<-HTML
 		justify-content: center;
 	}
 	.container:first-child .guide {
-		width: 70%;
-		padding: 1rem 5rem;
+		width: min(100%, 63rem);
+	}
+	@media screen and (min-width: 900px) {
+		.container:first-child .guide {
+			padding: 1rem 5rem;
+		}
 	}
 	.container:first-child .source {
 		display: none;
