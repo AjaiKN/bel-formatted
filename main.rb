@@ -1,3 +1,5 @@
+# Disclaimer: this may not be the most readable source code you've ever seen.
+
 source = File.read('bel.bel.lisp').split("\n")
 guide = File.read('guide.md').split("\n")
 
