@@ -103,4 +103,4 @@ for chunk in chunks
 	HTML
 end
 
-puts html
+File.open('index.html', 'w') { |file| file.write html }
