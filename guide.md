@@ -2,8 +2,6 @@ _This is an unofficial, formatted website version of [Paul Graham’s guide and 
 
 _The source code is here: <https://github.com/Aurelius333/bel-formatted>. The markdown versions of the files are from <https://github.com/alephyud/bel>._
 
-_Warning: I haven't made this page look OK on small screens yet._
-
 # The Bel Language guide
 
 _By Paul Graham, 12 Oct 2019_

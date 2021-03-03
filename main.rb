@@ -89,6 +89,22 @@ html = <<-HTML
 		display: none;
 	}
 
+	@media screen and (max-width: 900px) {
+		.container {
+			flex-direction: column-reverse;
+		}
+		.guide {
+			width: 100%;
+		}
+		.source {
+			width: 100%;
+			background-color: rgb(2, 2, 70);
+		}
+		.container .source pre {
+			max-height: 30vh;
+		}
+	}
+
 	* {
 		/* for performance */
 		contain: content;
