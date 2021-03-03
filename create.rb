@@ -1,11 +1,11 @@
 source = File.read('bel.bel.lisp').split("\n")
-readme = File.read('README.md').split("\n")
+guide = File.read('guide.md').split("\n")
 
-readme_stuff = []
-readme_filtered = readme.select.with_index do |line, i|
+guide_stuff = []
+guide_filtered = guide.select.with_index do |line, i|
 	is_magical = line.start_with? '!!'
 	if is_magical
-		readme_stuff << [i - readme_stuff.length, line.slice(2..(-1))]
+		guide_stuff << [i - guide_stuff.length, line.slice(2..(-1))]
 	end
 	!is_magical
 end
@@ -19,20 +19,20 @@ source.each.with_index do |line, i|
 end
 
 chunk_lines = [[0, 0, false]]
-readme_stuff.each do |thing|
-	readme_line_num, id = thing
+guide_stuff.each do |thing|
+	guide_line_num, id = thing
 	source_line_num = source_stuff[id]
 	throw "id not available: #{id}" if !source_line_num
-	chunk_lines << [readme_line_num, source_line_num]
+	chunk_lines << [guide_line_num, source_line_num]
 end
-chunk_lines << [readme.length - 1, source.length - 1]
+chunk_lines << [guide.length - 1, source.length - 1]
 
 chunks = chunk_lines.each_cons(2).to_a.map do |pair|
 	if pair[1][0] < pair[0][0] || pair[1][1] < pair[0][1]
 		raise "not in order: #{pair[0][1]}, #{pair[1][1]}"
 	end
 	[
-		readme_filtered.slice(pair[0][0]...pair[1][0]).join("\n"),
+		guide_filtered.slice(pair[0][0]...pair[1][0]).join("\n"),
 		         source.slice(pair[0][1]...pair[1][1]).join("\n")
 	]
 end
@@ -50,7 +50,7 @@ html = <<-HTML
 		display: flex;
 		width: 100%;
 	}
-	.readme {
+	.guide {
 		/*background-color: white;*/
 		width: 50%;
 		padding: 0 2rem;
@@ -73,7 +73,7 @@ html = <<-HTML
 	.container:first-child {
 		justify-content: center;
 	}
-	.container:first-child .readme {
+	.container:first-child .guide {
 		width: 70%;
 		padding: 1rem 5rem;
 	}
@@ -91,13 +91,13 @@ HTML
 require 'kramdown'
 
 for chunk in chunks
-	readme_chunk, source_chunk = chunk
-	readme_chunk.gsub! "```", "~~~"
-	readme_html = Kramdown::Document.new(readme_chunk).to_html
+	guide_chunk, source_chunk = chunk
+	guide_chunk.gsub! "```", "~~~"
+	guide_html = Kramdown::Document.new(guide_chunk).to_html
 	source_html = Kramdown::Document.new("~~~\n"+source_chunk+"\n~~~").to_html
 	html += <<-HTML
 		<div class="container">
-			<div class="readme">#{readme_html}</div>
+			<div class="guide">#{guide_html}</div>
 			<div class="source">#{source_html}</div>
 		</div>
 	HTML
