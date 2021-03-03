@@ -63,14 +63,12 @@ html = <<-HTML
 		/*background-color: rgb(45, 45, 45);*/
 		width: 50%;
 		padding: 0 1rem;
-	}
-	.container .source {
 		position: -webkit-sticky;
 		position: sticky;
 		top: 0;
 		align-self: flex-start;
 	}
-	.container .source pre {
+	.source pre {
 		max-height: 95vh;
 	}
 
@@ -100,7 +98,7 @@ html = <<-HTML
 			width: 100%;
 			background-color: rgb(2, 2, 70);
 		}
-		.container .source pre {
+		.source pre {
 			max-height: 30vh;
 		}
 	}
