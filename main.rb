@@ -94,8 +94,6 @@ html = <<-HTML
 </style>
 HTML
 
-# bare CSS
-
 require 'kramdown'
 
 for chunk in chunks
