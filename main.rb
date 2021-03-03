@@ -43,6 +43,7 @@ end
 
 html = <<-HTML
 <!DOCTYPE html>
+<html lang="en">
 <title>Bel</title>
 <style>
 	html, body {
@@ -109,5 +110,7 @@ for chunk in chunks
 		</div>
 	HTML
 end
+
+html += "</html>"
 
 File.open('index.html', 'w') { |file| file.write html }
